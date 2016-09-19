@@ -20,6 +20,11 @@ $( function() {
 */
 $(document).on( 'click', '.collapse li a', function() {
 	$(this).parent().children('ul').toggle();
+	if($(this).css('color') === 'rgb(0, 0, 255)') {
+		$(this).css('color', 'purple');
+	} else {
+		$(this).css('color', 'blue');
+	}
 });
 
 /*
@@ -30,7 +35,7 @@ $(document).on( 'click', '.collapse li a', function() {
 encode = function( key, val, index ) {
 	if( typeof val === 'object' && val !== null ) {
 		var output = "";
-		output = output + "<li id='" + key + "'><a>" + key + "</a><ul class='sortable" + index + "'>";
+		output = output + "<li id='" + key + "'><a>" + key + "</a><ul class='sortable" + index + " contain'>";
 		for( var entry in val ) {
 			output = output + encode( entry, val[entry], index + 1 );
 		}
