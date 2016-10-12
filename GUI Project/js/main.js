@@ -49,16 +49,21 @@ makeFile = function(textArray) {
 	time a non-object is found, it is added to the list.
 */	
 encode = function( key, val, index ) {
+	if( key.contains("'") ) {
+		htmlKey = key.replace( "'", "&#39;");
+	} else {
+		htmlKey = key;
+	}
 	if( typeof val === 'object' && val !== null ) {
 		var output = "";
-		output = output + "<li id='" + key + "'><a>" + key + "</a><ul class='sortable" + index + " contain'>";
+		output = output + "<li id='" + htmlKey + "'><a>" + key + "</a><ul class='sortable" + index + " contain'>";
 		for( var entry in val ) {
 			output = output + encode( entry, val[entry], index + 1 );
 		}
 		output = output + "</ul></li>";
 		return output;
 	} else {
-		return "<li id='" + key + "'>" + key + ": <input type='text' name='" + key + "' value='" + val + "'></li>";
+		return "<li id='" + htmlKey + "'>" + key + ": <input type='text' name='" + htmlKey + "' value='" + val + "'></li>";
 	}
 }
 
@@ -153,6 +158,7 @@ parseJson = function() {
 	json = decode();
 	download = document.getElementById('downloadLink');
 	download.href = makeFile(json);
+	alert("Ready!");
 }
 
 /*
