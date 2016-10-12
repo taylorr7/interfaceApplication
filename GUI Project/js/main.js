@@ -100,7 +100,7 @@ decode = function( ) {
 				}
 			} else if(!isNaN(parseFloat(innerValue))) {
 				if((i + 2 < fileArray.length) && (fileArray[i+2].startsWith("li"))) {
-					line = parseFloat(innerValue) + ","
+					line = innerValue + ","
 				}
 				else {
 					line = parseFloat(innerValue);
