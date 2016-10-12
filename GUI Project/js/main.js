@@ -1,4 +1,4 @@
-var jsonFile = "CS4.json"; // Temporary global variable used for finding the input file.
+var jsonFile = "CS3.json"; // Temporary global variable used for finding the input file.
 var textFile = null; // Temporary global variable used for download link.
 
 /*
@@ -134,12 +134,12 @@ decode = function( ) {
 		} else if(fileArray[i].startsWith("a")) {
 		} else if(fileArray[i].startsWith("/a")) {
 		} else {
-			alert(fileArray[i]);
+			//alert(fileArray[i]);
 		}
 		json = json + line;
 	}
 	json = json + "}";
-	alert(json);
+	//alert(json);
 	return json;
 }
 
