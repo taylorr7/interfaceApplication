@@ -1,4 +1,4 @@
-var jsonFile = "CS3.json"; // Temporary global variable used for finding the input file.
+var jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/CS3.json"; // Temporary global variable used for finding the input file.
 var textFile = null; // Temporary global variable used for download link.
 
 /*
@@ -49,7 +49,7 @@ makeFile = function(textArray) {
 	time a non-object is found, it is added to the list.
 */	
 encode = function( key, val, index ) {
-	if( key.contains("'") ) {
+	if( key.includes("'") ) {
 		htmlKey = key.replace( "'", "&#39;");
 	} else {
 		htmlKey = key;
