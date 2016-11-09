@@ -148,6 +148,17 @@ decode = function( ) {
 	return json;
 }
 
+
+/*
+	Called when the 'Add Chapter' button is clicked.
+	Parses through the rst files to build a list
+	of possible chapters and allows the user to pick
+	from them to add to the book.
+*/
+addChapter = function() {
+	alert("Add Chapter");
+}
+
 /*
 	Called when the 'Export' button is clicked.
 	Makes a call to the decode() function to produce a string
@@ -176,6 +187,11 @@ $.getJSON( jsonFile, function( data ) {
 		"id": "json",
 		"class": "collapse",
 		html: items.join( "" )
+	}).appendTo( "body" );
+	
+	$("<button/>", {
+		"onclick": "addChapter()",
+		html: "Add Chapter"
 	}).appendTo( "body" );
 	
 	$("<button/>", {
