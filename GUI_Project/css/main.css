@@ -9,3 +9,7 @@ a {
 li {
 	padding: 5px;
 }
+
+#options {
+	display: none;
+}
