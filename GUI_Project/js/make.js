@@ -53,6 +53,35 @@ const encode = ( key, val, index) => {
 	}
 }
 
+const chapter = ( key, val, index ) => {
+	if( key.includes("'") ) {
+		htmlKey = key.replace( "'", "&#39;");
+	} else {
+		htmlKey = key;
+	}
+  let output = "";
+  output += "<li><a>" + key + "</a>";
+  output += "<ul>";
+  for( let entry in val ) {
+    //output += "<li>" + val + "</li>";
+    const path = entry.search('/') + 1;
+    const entryName = entry.substr(path);
+    //output += "<li>" + entryName + "<ul>";
+    output += "<li><a>" + val[entry]['long_name'] + "</a>";
+    //if(val[entry]['sections'] != null) {
+      //alert(val[entry]['sections']);
+      for( let section in val[entry]['sections'] ) {
+       //alert(section);
+       output += "<ul><li><a> Sections: </a><ul>";
+       output += "<li>" + section + "</li>";
+       output += "</ul></li></ul></li>";
+      }
+    //output += "</ul></li>"; 
+  }
+  output += "</ul></li>"
+  return output;
+}
+
 $.getJSON( jsonFile, function( data ) {
 	
 	let headerString = "<h1> Header: </h1>";
