@@ -13,3 +13,8 @@ li {
 #options {
 	display: none;
 }
+
+#downloadLink {
+	display: none;
+	padding: 20px;
+}
