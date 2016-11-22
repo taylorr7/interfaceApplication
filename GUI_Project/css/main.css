@@ -1,5 +1,5 @@
-ul li ul {
-	display: none;
+h1 {
+	width: 30%;
 }
 
 a {
@@ -8,6 +8,18 @@ a {
 
 li {
 	padding: 5px;
+}
+
+ul li ul {
+	display: none;
+}
+
+#toggle {
+	margin-left: 20%;
+}
+
+#add {
+	margin-left: 20%;
 }
 
 #options {

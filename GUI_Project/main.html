@@ -1,21 +1,28 @@
 <!DOCTYPE html>
+<meta charset="UTF-8"> 
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.theme.css">
-	<link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.structure.css">
+<link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.theme.css">
+<link rel="stylesheet" type="text/css" href="js/jquery-ui/jquery-ui.structure.css">
 <script src="js/jquery.js"></script>
 <script src="js/jquery-ui/jquery-ui.js"></script>
 <script src="js/make.js"></script>
 </head>
 <body>
+	<div id="instructions">
+		<p> Press the "Save Book" button to generate a download link that will allow you to download your json book file! </p>
+	</div>
+	<div id="navigation"> 
+		<!--<button id="new" class="ui-button ui-corner-all">New Book</button>-->
+		<button id="load" class="ui-button ui-corner-all");>Load Book</button>
+		<button id="save" class="ui-button ui-corner-all">Save Book</button>
+		<a download="Test.json" id="downloadLink">Download</a>
+	</div>
 	<div id="header"> </div>
 	<div id="options"> </div>
-	<button id="toggle">Show Options</button>
 	<div id="chapters"> </div>
-	<div id="exercises"> </div>
-	<button id="download">Build JSON</button>
-	<a download="Test.json" id="downloadLink">Download</a>
+	<!-- <div id="exercises"> </div> -->
 </body>
 </html>

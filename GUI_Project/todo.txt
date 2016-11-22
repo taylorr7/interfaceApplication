@@ -1,0 +1,10 @@
+Add styles.
+Fix chapter display.
+Format delete chapter button.
+Format deadline textboxes.
+Fix json export.
+Fix load book button.
+Extract filename from url.
+Add new book button.
+Add canvas id.
+Add new chapter button. [Later]
