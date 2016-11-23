@@ -1,19 +1,44 @@
-let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/CS3.json";
-let textFile = null; // Temporary global variable used for download link.
-let nextId = 0;
+// make.js
 
+// Default variable for loading a json file. Should be set to whatever is passed in by the user.
+let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/CS3.json";
+//let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/Everything.json";
+//let jsonFile = "";
+
+let textFile = null; // Temporary global variable used for download link.
+
+let nextId = 0; // Global variable used for tracking input ids.
+
+/*
+ * Checks if a json file has been defined and, if not, prompts the user to select one.
+ */
 $(document).ready(() => {
   if(jsonFile != "") {
     loadJSON(jsonFile);
   } else {
-    $('#header').html("<h1> Please load a book to edit or start a new book. </h1>");
+    $('#title').html("<h1> Please load a book to edit or start a new book. </h1>");
   }
 })
 
+/*
+ * Defines the div tag 'dialog' as a jquery ui dialog widget.
+ */
+$( function() {
+  $( "#dialog" ).dialog({
+    autoOpen: false
+  });
+});
+
+/*
+ * Defines the class 'datepicker' as a jquery ui datepicker widget.
+ */
 $(document).on('focus', '.datepicker', function() {
   $(this).datepicker();
 });
 
+/*
+ * The click event for the 'Show Options' button.
+ */
 $(document).on('click', '#toggle', function() {
 	$('#options').toggle();
 	if($('#options').is(':visible')) {
@@ -23,15 +48,25 @@ $(document).on('click', '#toggle', function() {
 	}
 });
 
+/*
+ * The click event for the 'New Book' button.
+ */
 $(document).on('click', '#new', function() {
 	newJSON();
 });
 
+/*
+ * The click event for the 'Load Book' button.
+ * The url for the json directory is passed into here.
+ */
 $(document).on('click', '#load', function() {
-  loadJSON(jsonFile);
-  //listJSON('/json/');
+  listJSON('json/');
 });
 
+/*
+ * The click event for the 'Save Book' button.
+ * Currently, this saves the book as an html download object.
+ */
 $(document).on('click', '#save', function() {
   let json = buildJSON();
   let download = document.getElementById('downloadLink');
@@ -40,10 +75,25 @@ $(document).on('click', '#save', function() {
   $('#downloadLink').toggle();
 });
 
+/*
+ * The click event for the 'Book Button' button.
+ * This button loads the selected json book.
+ */
+$(document).on('click', '#bookButton', function() {
+  let jsonBook = $('#Book option:selected').val() + $('#Book option:selected').text();
+  loadJSON(jsonBook);
+});
+
+/*
+ * The click event for the 'Delete' buttons.
+ */
 $(document).on('click', '.remove', function() {
   $(this).parent().remove();
 });
 
+/*
+ * The click event for the collapsible lists.
+ */
 $(document).on( 'click', '.collapse li a', function() {
 	$(this).parent().children('ul').toggle();
 	if($(this).css('color') === 'rgb(0, 0, 255)') {
@@ -53,13 +103,21 @@ $(document).on( 'click', '.collapse li a', function() {
 	}
 });
 
+/*
+ * Ajax call to the given directory to pull the names of all .json files.
+ * The user is then prompted to select one and given the option to load it.
+ */
 const listJSON = (url) => {
 	$.ajax({
 		url: url,
 		success: function(data) {
+      let output = "<select id=\"Book\">";
 			$(data).find("a:contains(.json)").each(function() {
-				alert($(this).attr("href"));
+				output += "<option value=\"" + url + "\">" + $(this).attr("href") + "</option>";
 			});
+      output += "</select><button id=\"bookButton\">Select Book</button>";
+      $( '#dialog' ).html( output );
+      $( '#dialog' ).dialog( "open" );
 		},
 		error: function() {
 			alert("error");
@@ -67,8 +125,14 @@ const listJSON = (url) => {
 	});
 };
 
+/*
+ * Function to remove class declarations and ampersands from a given html string before
+ * turning it into an array, splitting on the '<' character.
+ */
 const prepArray = ( inputHTML ) => {
   inputHTML = inputHTML.replace(/&amp;/g, "&");
+  inputHTML = inputHTML.replace(/ style="[^"]+"/g, "");
+  inputHTML = inputHTML.replace(/ style=""/g, "");
   inputHTML = inputHTML.replace(/ class="ui-sortable-handle"/g, "");
   inputHTML = inputHTML.replace(/ class="datepicker ui-widget-content ui-corner-all"/g, "");
   inputHTML = inputHTML.replace(/ class="ui-widget-content ui-corner-all ui-sortable-handle"/g, "");
@@ -77,18 +141,24 @@ const prepArray = ( inputHTML ) => {
   return HTMLArray;
 }
 
+/*
+ * Function to return the 'value' element of the given html string.
+ */
 const pullValue = ( inputString ) => {
   let value = "";
   if( inputString.includes("value") ) {
-	let stringStart = inputString.search("value=\"");
-	let stringEnd = inputString.search("\" type=");
-	value = inputString.slice(stringStart + 7, stringEnd);
+	  let stringStart = inputString.search("value=\"");
+	  let stringEnd = inputString.search("\" type=");
+	  value = inputString.slice(stringStart + 7, stringEnd);
   } else {
-	value = "";
+	  value = "";
   }
   return value;
 }
 
+/*
+ * Function to take a key and a value and return it as a json object pair.
+ */
 const makePair = ( key, value ) => {
   if(value === "{}") {
     return "\"" + key + "\": " + value + ",\n";
@@ -99,6 +169,9 @@ const makePair = ( key, value ) => {
   }
 }
 
+/*
+ * Function to take a text array and turn it into an html download object.
+ */
 const makeFile = ( textArray ) => {
 	if(textFile != null) {
 		window.URL.revokeObjectURL(textFile);
@@ -108,6 +181,10 @@ const makeFile = ( textArray ) => {
 	return textFile;
 }
 
+/*
+ * Function to read in a json key and value pair and convert it into the
+ * proper html to be dispayed to the user.
+ */
 const encode = ( key, val, index = -100 ) => {
   let htmlKey = "";
 	if( key.includes("'") ) {
@@ -136,6 +213,10 @@ const encode = ( key, val, index = -100 ) => {
 	}
 }
 
+/*
+ * Function to read in an array of html strings and convert it into a json
+ * object.
+ */
 const decode = ( fileArray, chapter = true ) => {
 	let jsonString = "";
 	let spacing = "  ";
@@ -189,7 +270,7 @@ const decode = ( fileArray, chapter = true ) => {
 					i++;
 				}
 			} else {
-				if(chapter) {
+				if(chapter || (i != 1 && i != (fileArray.length - 1))) {
 					line = "{ \n";
 					spacing = spacing + "  ";
 				}
@@ -197,14 +278,18 @@ const decode = ( fileArray, chapter = true ) => {
 		} else if(fileArray[i].startsWith("/li")) {
 			line = "\n";
 		} else if(fileArray[i].startsWith("/ul")) {
-			if(chapter) {
+			if(chapter || (i != 1 && i != (fileArray.length - 1))) {
 				spacing = spacing.slice(0, spacing.length-2);
-				if((i + 2 < fileArray.length) && (fileArray[i+2].startsWith("li"))) {
-					line = spacing + "},";
-				}
-				else {
-					line = spacing + "}";
-				}
+        if(chapter) {
+          if((i + 2 < fileArray.length) && (fileArray[i+2].startsWith("li"))) {
+            line = spacing + "},";
+          }
+          else {
+            line = spacing + "}";
+          }
+        } else {
+          line = spacing + "},";
+        }
 			}
 		} else if(fileArray[i].startsWith("a")) {
 		} else if(fileArray[i].startsWith("/a")) {
@@ -216,6 +301,9 @@ const decode = ( fileArray, chapter = true ) => {
 	return jsonString;
 }
 
+/*
+ * Function to build a json file from the html on the page.
+ */
 const buildJSON = ( ) => {
   let fileName = "Download.json";
   if($('#1').val() != "") {
@@ -246,6 +334,10 @@ const buildJSON = ( ) => {
   return json;
 }
 
+/*
+ * Function to add the proper jquery ui classes to
+ * the appropriate dynamic elements.
+ */
 const addClasses = function() {
 	$('#content').addClass("ui-widget-content");
 	$('button').addClass("ui-button ui-corner-all");
@@ -254,6 +346,9 @@ const addClasses = function() {
 	$( ".sortable" ).sortable();	
 }
 
+/*
+ * Function to build a new json book.
+ */
 const newJSON = function() {
   let titleString = "<h1> Header: <button id=\"toggle\"> Show Options </button> </h1> <ul>";
   titleString += encode( "file name", "" );
@@ -285,6 +380,9 @@ const newJSON = function() {
 	addClasses();
 }
 
+/*
+ * Function to load an existing json book.
+ */
 const loadJSON = function(jsonFile) {
   $.getJSON( jsonFile, function( data ) {
 	let nameStart = jsonFile.lastIndexOf("/");

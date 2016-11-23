@@ -1,3 +1,10 @@
+// rst.js
+
+/*
+* This is being used to test functions to read rst files and
+* add chapters to a book.
+*/
+
 $(document).ready(() => {
 	let globText = "";
 	const rst = "Summations.rst";

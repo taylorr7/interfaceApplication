@@ -1,3 +1,7 @@
+/*
+	NOT ACTIVELY BEING USED ANYMORE. EVERYTHING WAS MOVED OVER TO 'make.js'.
+*/
+
 var jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/CS3.json"; // Temporary global variable used for finding the input file.
 var textFile = null; // Temporary global variable used for download link.
 

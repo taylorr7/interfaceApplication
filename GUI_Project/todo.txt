@@ -1,5 +1,3 @@
-Fix file names in download file.
-Fix reading text values.
-Fix load book button. [Needs Server]
+Add glob_exer_options?
 Add canvas id.
 Add new chapter button. [Later]
