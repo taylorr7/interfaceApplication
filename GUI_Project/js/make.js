@@ -1,5 +1,6 @@
 let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/CS3.json";
 let textFile = null; // Temporary global variable used for download link.
+let nextId = 0;
 
 $(document).ready(() => {
   if(jsonFile != "") {
@@ -70,6 +71,7 @@ const prepArray = ( inputHTML ) => {
   inputHTML = inputHTML.replace(/&amp;/g, "&");
   inputHTML = inputHTML.replace(/ class="ui-sortable-handle"/g, "");
   inputHTML = inputHTML.replace(/ class="datepicker ui-widget-content ui-corner-all"/g, "");
+  inputHTML = inputHTML.replace(/ class="ui-widget-content ui-corner-all ui-sortable-handle"/g, "");
   inputHTML = inputHTML.replace(/ class="ui-widget-content ui-corner-all"/g, "");
   let HTMLArray = inputHTML.split("<"); 
   return HTMLArray;
@@ -118,8 +120,8 @@ const encode = ( key, val, index = -100 ) => {
 		if( index === 1 ) {
 			output += "<li id=\"" + htmlKey + "\"><a>" + key + "</a><button class=\"remove\">Delete</button><ul class=\"contain\">";
 		} else if( index === 3 ) {
-		    output += "<li id=\"hard_deadline\">hard_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\"> <br>";
-			output += "<li id=\"soft_deadline\">soft_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\"> <br>";
+		    output += "<li id=\"hard_deadline\">hard_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\" id=\"" + ++nextId + "\"> <br>";
+			output += "<li id=\"soft_deadline\">soft_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\" id=\"" + ++nextId + "\"> <br>";
 			output += "<li id=\"" + htmlKey + "\"><a>" + key + "</a><ul class=\"contain\">";
 		} else {
 			output += "<li id='" + htmlKey + "'><a>" + key + "</a><ul class=\"contain\">";
@@ -130,7 +132,7 @@ const encode = ( key, val, index = -100 ) => {
 		output += "</ul></li>";
 		return output;
 	} else {
-		return "<li id=\"" + htmlKey + "\">" + key + ": <input type=\"text\" name=\"" + htmlKey + "\" value=\"" + val + "\"></li>";
+		return "<li id=\"" + htmlKey + "\">" + key + ": <input type=\"text\" name=\"" + htmlKey + "\" value=\"" + val + "\" id=\"" + ++nextId + "\"></li>";
 	}
 }
 
@@ -143,12 +145,13 @@ const decode = ( fileArray, chapter = true ) => {
 		if(fileArray[i].startsWith("li")) {
 			let stringStart = fileArray[i].search("id=\"");
 			let stringEnd = fileArray[i].search("\">");
-			value = fileArray[i].slice(stringStart + 4, stringEnd);
+			let value = fileArray[i].slice(stringStart + 4, stringEnd);
 			line = spacing + "\"" + value + "\": ";
 		} else if(fileArray[i].startsWith("input")) {
-			let stringStart = fileArray[i].search("value=\"");
+			let stringStart = fileArray[i].search("id=\"");
 			let stringEnd = fileArray[i].search("\" type=");
-			value = fileArray[i].slice(stringStart + 7, stringEnd);
+			let id = "#" + fileArray[i].slice(stringStart + 4, stringEnd);
+      let value = $(id).val();
 			if(value === "true" || value === "false") {
 				if((i + 2 < fileArray.length) && (fileArray[i+2].startsWith("li"))) {
 					line = value + ",";
@@ -165,7 +168,8 @@ const decode = ( fileArray, chapter = true ) => {
 						line = parseFloat(value);
 					}
 				} else {
-					line = value + ",";
+					line = "\"" + value + "\",";
+          // line = value + ",";
 				}
 			} else {
 				if((!chapter) || (i + 2 < fileArray.length) && (fileArray[i+2].startsWith("li"))) {
@@ -214,6 +218,10 @@ const decode = ( fileArray, chapter = true ) => {
 
 const buildJSON = ( ) => {
   let fileName = "Download.json";
+  if($('#1').val() != "") {
+    fileName = $('#1').val();
+  }
+  
   $('#downloadLink').attr('download', fileName);
   
   let json = "{\n";
@@ -247,16 +255,18 @@ const addClasses = function() {
 }
 
 const newJSON = function() {
-    let titleString = "<h1> Header: <button id=\"toggle\"> Show Options </button> </h1>";
-    titleString += encode( "file name", "" );
+  let titleString = "<h1> Header: <button id=\"toggle\"> Show Options </button> </h1> <ul>";
+  titleString += encode( "file name", "" );
+  titleString += "</ul>";
 	$('#title').html(titleString);
 	
-	let headerString = "";
-    headerString += encode( "title", "" );
-    headerString += encode( "desc", "" );
-    $('#heading').html(headerString);
+	let headerString = "<ul>";
+  headerString += encode( "title", "" );
+  headerString += encode( "desc", "" );
+  headerString += "</ul>";
+  $('#heading').html(headerString);
   
-    let optionString = "";
+  let optionString = "<ul>";
 	optionString += encode( "build_dir", "Books" );
 	optionString += encode( "code_dir", "SourceCode/" );
 	optionString += encode( "lang", "en" );
@@ -265,11 +275,12 @@ const newJSON = function() {
 	optionString += encode( "assumes", "recursion" );
 	optionString += encode( "disp_mod_comp", "true" );
 	optionString += encode( "glob_exer_options", {} );
-    $('#options').html(optionString);
+  optionString += "</ul>";
+  $('#options').html(optionString);
   
-    let chapterString = "<h1> Chapters: <button id=\"add\"> Add Chapter </button> </h1> <ul class=\"collapse\">";
-    chapterString += "</ul>";
-    $('#chapters').html(chapterString);
+  let chapterString = "<h1> Chapters: <button id=\"add\"> Add Chapter </button> </h1> <ul class=\"collapse\">";
+  chapterString += "</ul>";
+  $('#chapters').html(chapterString);
 	
 	addClasses();
 }
@@ -281,31 +292,31 @@ const loadJSON = function(jsonFile) {
 	let fileName = jsonFile.slice(nameStart + 1, nameEnd);
 	
 	let titleString = "<h1> Header: <button id=\"toggle\"> Show Options </button> </h1> <ul>";
-    titleString += encode( "file name", fileName );
+  titleString += encode( "file name", fileName );
 	titleString += "</ul>"
 	$('#title').html(titleString);
 	
 	let headerString = "<ul>";
-    headerString += encode( "title", data['title'] );
-    headerString += encode( "desc", data['desc'] );
+  headerString += encode( "title", data['title'] );
+  headerString += encode( "desc", data['desc'] );
 	headerString += "</ul>";
-    $('#heading').html(headerString);
+  $('#heading').html(headerString);
 
-    let optionString = "<ul>";
+  let optionString = "<ul>";
 	$.each( data, function( key, val ) {
 		if(!( key === "title" || key === "desc" || key === "chapters" )) {
 			optionString += encode( key, val );
 		}
 	});
 	optionString += "</ul>";
-    $('#options').html(optionString);
+  $('#options').html(optionString);
 
-    let chapterString = "<h1> Chapters: <button id=\"add\"> Add Chapter </button> </h1> <ul class=\"collapse sortable\">";
-    $.each( data['chapters'], function( key, val ) {
-      chapterString += encode( key, val, 1 );
-    });
-    chapterString += "</ul>";
-    $('#chapters').html(chapterString);
+  let chapterString = "<h1> Chapters: <button id=\"add\"> Add Chapter </button> </h1> <ul class=\"collapse sortable\">";
+  $.each( data['chapters'], function( key, val ) {
+    chapterString += encode( key, val, 1 );   
+  });
+  chapterString += "</ul>";
+  $('#chapters').html(chapterString);
 	
 	addClasses();
   });
