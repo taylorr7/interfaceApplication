@@ -1,8 +1,8 @@
 // make.js
 
 // Default variable for loading a json file. Should be set to whatever is passed in by the user.
-let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/CS3.json";
-//let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/Everything.json";
+let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/json/CS3.json";
+//let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/json/Everything.json";
 //let jsonFile = "";
 
 let jsonDirectory = "https://taylorr7.github.io/interfaceApplication/GUI_Project/json/";
