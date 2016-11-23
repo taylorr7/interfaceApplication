@@ -415,6 +415,7 @@ const loadJSON = function(jsonFile) {
   $('#options').html(optionString);
 
   let chapterString = "<h1> Chapters: </h1> <ul class=\"collapse sortable\">";
+  /* <button id=\"add\"> Add Chapter </button> */
   $.each( data['chapters'], function( key, val ) {
     chapterString += encode( key, val, 1 );   
   });
