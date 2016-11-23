@@ -5,6 +5,8 @@ let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/CS3.
 //let jsonFile = "https://taylorr7.github.io/interfaceApplication/GUI_Project/Everything.json";
 //let jsonFile = "";
 
+let jsonDirectory = "https://taylorr7.github.io/interfaceApplication/GUI_Project/json/";
+
 let textFile = null; // Temporary global variable used for download link.
 
 let nextId = 0; // Global variable used for tracking input ids.
@@ -60,7 +62,7 @@ $(document).on('click', '#new', function() {
  * The url for the json directory is passed into here.
  */
 $(document).on('click', '#load', function() {
-  listJSON('json/');
+  listJSON(jsonDirectory);
 });
 
 /*
