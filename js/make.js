@@ -65,7 +65,7 @@ $(document).on('click', '#new', function() {
  */
 $(document).on('click', '#load', function() {
   loadJSON(jsonFile);
-  //listJSON(jsonDirectory);
+  /*listJSON(jsonDirectory);*/
 });
 
 /*
