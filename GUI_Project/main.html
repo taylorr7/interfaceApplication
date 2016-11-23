@@ -11,18 +11,23 @@
 <script src="js/make.js"></script>
 </head>
 <body>
-	<div id="instructions">
-		<p> Press the "Save Book" button to generate a download link that will allow you to download your json book file! </p>
+	<div id="content">
+		<div id="instructions">
+			<p> Press the "Save Book" button to generate a download link that will allow you to download your json book file! </p>
+		</div>
+		<div id="navigation"> 
+			<button id="new" class="ui-button ui-corner-all">New Book</button>
+			<button id="load" class="ui-button ui-corner-all");>Load Book</button>
+			<button id="save" class="ui-button ui-corner-all">Save Book</button>
+			<a download="Test.json" id="downloadLink">Download</a>
+		</div>
+		<div id="header"> 
+			<div id="title"> </div>
+			<div id="heading"> </div>
+		</div>
+		<div id="options"> </div>
+		<div id="chapters"> </div>
+		<!-- <div id="exercises"> </div> -->
 	</div>
-	<div id="navigation"> 
-		<!--<button id="new" class="ui-button ui-corner-all">New Book</button>-->
-		<button id="load" class="ui-button ui-corner-all");>Load Book</button>
-		<button id="save" class="ui-button ui-corner-all">Save Book</button>
-		<a download="Test.json" id="downloadLink">Download</a>
-	</div>
-	<div id="header"> </div>
-	<div id="options"> </div>
-	<div id="chapters"> </div>
-	<!-- <div id="exercises"> </div> -->
 </body>
 </html>
