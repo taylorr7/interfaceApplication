@@ -378,7 +378,8 @@ const newJSON = function() {
   optionString += "</ul>";
   $('#options').html(optionString);
   
-  let chapterString = "<h1> Chapters: <button id=\"add\"> Add Chapter </button> </h1> <ul class=\"collapse\">";
+  //let chapterString = "<h1> Chapters: <button id=\"add\"> Add Chapter </button> </h1> <ul class=\"collapse\">";
+  let chapterString = "<h1> Chapters: </h1> <ul class=\"collapse\">";
   chapterString += "</ul>";
   $('#chapters').html(chapterString);
 	
@@ -414,7 +415,8 @@ const loadJSON = function(jsonFile) {
 	optionString += "</ul>";
   $('#options').html(optionString);
 
-  let chapterString = "<h1> Chapters: <button id=\"add\"> Add Chapter </button> </h1> <ul class=\"collapse sortable\">";
+  //let chapterString = "<h1> Chapters: <button id=\"add\"> Add Chapter </button> </h1> <ul class=\"collapse sortable\">";
+  let chapterString = "<h1> Chapters: </h1> <ul class=\"collapse\">";
   $.each( data['chapters'], function( key, val ) {
     chapterString += encode( key, val, 1 );   
   });
