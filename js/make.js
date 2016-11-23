@@ -60,9 +60,12 @@ $(document).on('click', '#new', function() {
 /*
  * The click event for the 'Load Book' button.
  * The url for the json directory is passed into here.
+ * Since Ajax doesn't seem to work on github, this
+ * just loads the hardcoded json file for now.
  */
 $(document).on('click', '#load', function() {
-  listJSON(jsonDirectory);
+  loadJSON(jsonFile);
+  //listJSON(jsonDirectory);
 });
 
 /*
