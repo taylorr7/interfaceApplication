@@ -1,8 +1,8 @@
 Add canvas id.
-Add sortable modules.
+Indicate what is a chapter, module, section and exercise.
+Change field names to be descriptive.
 Switch module path with long_name.
-Unpublish chapter instead of delete.
-Add due date for chapter.
+Restrict what fields can be edited.
 Add new chapter button. [Later]
 
 Chapter -> Module -> Section -> Exercise
