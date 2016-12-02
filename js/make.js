@@ -200,9 +200,13 @@ const encode = ( key, val, index = -100 ) => {
   if( typeof val === 'object' && val !== null ) {
 		let output = "";
 		if( index === 1 ) {
-			output += "<li id=\"" + htmlKey + "\"><span class='ui-icon ui-icon-grip-dotted-vertical'></span><a><span class='ui-icon ui-icon-triangle-1-s'></span>" + key + "</a><button class=\"remove\">Delete</button><ul class=\"contain\">";
-		} else if( index === 3 ) {
-		    output += "<li id=\"hard_deadline\">hard_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\" id=\"" + ++nextId + "\"> <br>";
+			output += "<li id=\"" + htmlKey + "\"><span class='ui-icon ui-icon-grip-dotted-vertical'></span><a><span class='ui-icon ui-icon-triangle-1-s'></span>" + key + "</a><button class=\"remove\">Delete</button><ul class=\"contain sortable\">";
+      output += "<li id=\"hard_deadline\">hard_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\" id=\"" + ++nextId + "\"> <br>";
+			output += "<li id=\"soft_deadline\">soft_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\" id=\"" + ++nextId + "\"> <br>";
+		} else if( index === 2 ) {
+      output += "<li id='" + htmlKey + "'><span class='ui-icon ui-icon-grip-dotted-vertical'></span><a><span class='ui-icon ui-icon-triangle-1-s'></span>" + key + "</a><ul class=\"contain\">";
+    } else if( index === 3 ) {
+		  output += "<li id=\"hard_deadline\">hard_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\" id=\"" + ++nextId + "\"> <br>";
 			output += "<li id=\"soft_deadline\">soft_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\" id=\"" + ++nextId + "\"> <br>";
 			output += "<li id=\"" + htmlKey + "\"><a><span class='ui-icon ui-icon-triangle-1-s'></span>" + key + "</a><ul class=\"contain\">";
 		} else {
