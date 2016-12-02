@@ -1,6 +1,5 @@
 Add canvas id.
 Add sortable modules.
-Add collapse/sort icons.
 Switch module path with long_name.
 Unpublish chapter instead of delete.
 Add due date for chapter.

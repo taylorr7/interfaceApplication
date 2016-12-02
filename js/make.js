@@ -101,11 +101,13 @@ $(document).on('click', '.remove', function() {
  */
 $(document).on( 'click', '.collapse li a', function() {
 	$(this).parent().children('ul').toggle();
-	if($(this).css('color') === 'rgb(0, 0, 255)') {
-		$(this).css('color', 'purple');
-	} else {
-		$(this).css('color', 'blue');
-	}
+  if($(this).children('span').hasClass('ui-icon-triangle-1-s')) {
+    $(this).children('span').removeClass('ui-icon-triangle-1-s');
+    $(this).children('span').addClass('ui-icon-triangle-1-se');
+  } else if($(this).children('span').hasClass('ui-icon-triangle-1-se')) {
+    $(this).children('span').removeClass('ui-icon-triangle-1-se');
+    $(this).children('span').addClass('ui-icon-triangle-1-s');
+  }
 });
 
 /*
@@ -138,10 +140,8 @@ const prepArray = ( inputHTML ) => {
   inputHTML = inputHTML.replace(/&amp;/g, "&");
   inputHTML = inputHTML.replace(/ style="[^"]+"/g, "");
   inputHTML = inputHTML.replace(/ style=""/g, "");
-  inputHTML = inputHTML.replace(/ class="ui-sortable-handle"/g, "");
-  inputHTML = inputHTML.replace(/ class="datepicker ui-widget-content ui-corner-all"/g, "");
-  inputHTML = inputHTML.replace(/ class="ui-widget-content ui-corner-all ui-sortable-handle"/g, "");
-  inputHTML = inputHTML.replace(/ class="ui-widget-content ui-corner-all"/g, "");
+  inputHTML = inputHTML.replace(/ class="[^"]+"/g, "");
+  inputHTML = inputHTML.replace(/ class=""/g, "");
   let HTMLArray = inputHTML.split("<"); 
   return HTMLArray;
 }
@@ -200,13 +200,13 @@ const encode = ( key, val, index = -100 ) => {
   if( typeof val === 'object' && val !== null ) {
 		let output = "";
 		if( index === 1 ) {
-			output += "<li id=\"" + htmlKey + "\"><a>" + key + "</a><button class=\"remove\">Delete</button><ul class=\"contain\">";
+			output += "<li id=\"" + htmlKey + "\"><span class='ui-icon ui-icon-grip-dotted-vertical'></span><a><span class='ui-icon ui-icon-triangle-1-s'></span>" + key + "</a><button class=\"remove\">Delete</button><ul class=\"contain\">";
 		} else if( index === 3 ) {
 		    output += "<li id=\"hard_deadline\">hard_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\" id=\"" + ++nextId + "\"> <br>";
 			output += "<li id=\"soft_deadline\">soft_deadline: <input type=\"text\" value=\"" + $.datepicker.formatDate('mm/dd/yy', new Date()) + "\" class=\"datepicker\" id=\"" + ++nextId + "\"> <br>";
-			output += "<li id=\"" + htmlKey + "\"><a>" + key + "</a><ul class=\"contain\">";
+			output += "<li id=\"" + htmlKey + "\"><a><span class='ui-icon ui-icon-triangle-1-s'></span>" + key + "</a><ul class=\"contain\">";
 		} else {
-			output += "<li id='" + htmlKey + "'><a>" + key + "</a><ul class=\"contain\">";
+			output += "<li id='" + htmlKey + "'><a><span class='ui-icon ui-icon-triangle-1-s'></span>" + key + "</a><ul class=\"contain\">";
 		}
 		for( var entry in val ) {
 			output = output + encode( entry, val[entry], index + 1 );
@@ -335,7 +335,6 @@ const buildJSON = ( ) => {
   json += decode( chapterArray );
   
   json += "\n}";
-  //alert(json);
   return json;
 }
 
@@ -390,38 +389,38 @@ const newJSON = function() {
  */
 const loadJSON = function(jsonFile) {
   $.getJSON( jsonFile, function( data ) {
-	let nameStart = jsonFile.lastIndexOf("/");
-	let nameEnd = jsonFile.search("$");
-	let fileName = jsonFile.slice(nameStart + 1, nameEnd);
-	
-	let titleString = "<h1> Header: <button id=\"toggle\"> Show Options </button> </h1> <ul>";
-  titleString += encode( "file name", fileName );
-	titleString += "</ul>"
-	$('#title').html(titleString);
-	
-	let headerString = "<ul>";
-  headerString += encode( "title", data['title'] );
-  headerString += encode( "desc", data['desc'] );
-	headerString += "</ul>";
-  $('#heading').html(headerString);
+    let nameStart = jsonFile.lastIndexOf("/");
+    let nameEnd = jsonFile.search("$");
+    let fileName = jsonFile.slice(nameStart + 1, nameEnd);
 
-  let optionString = "<ul>";
-	$.each( data, function( key, val ) {
-		if(!( key === "title" || key === "desc" || key === "chapters" )) {
-			optionString += encode( key, val );
-		}
-	});
-	optionString += "</ul>";
-  $('#options').html(optionString);
+    let titleString = "<h1> Header: <button id=\"toggle\"> Show Options </button> </h1> <ul>";
+    titleString += encode( "file name", fileName );
+    titleString += "</ul>"
+    $('#title').html(titleString);
 
-  let chapterString = "<h1> Chapters: </h1> <ul class=\"collapse sortable\">";
-  /* <button id=\"add\"> Add Chapter </button> */
-  $.each( data['chapters'], function( key, val ) {
-    chapterString += encode( key, val, 1 );   
-  });
-  chapterString += "</ul>";
-  $('#chapters').html(chapterString);
-	
-	addClasses();
+    let headerString = "<ul>";
+    headerString += encode( "title", data['title'] );
+    headerString += encode( "desc", data['desc'] );
+    headerString += "</ul>";
+    $('#heading').html(headerString);
+
+    let optionString = "<ul>";
+    $.each( data, function( key, val ) {
+      if(!( key === "title" || key === "desc" || key === "chapters" )) {
+        optionString += encode( key, val );
+      }
+    });
+    optionString += "</ul>";
+    $('#options').html(optionString);
+
+    let chapterString = "<h1> Chapters: </h1> <ul class=\"collapse sortable\">";
+    /* <button id=\"add\"> Add Chapter </button> */
+    $.each( data['chapters'], function( key, val ) {
+      chapterString += encode( key, val, 1 );   
+    });
+    chapterString += "</ul>";
+    $('#chapters').html(chapterString);
+
+    addClasses();
   });
 }
