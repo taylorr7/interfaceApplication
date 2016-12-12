@@ -1,0 +1,13 @@
+Reorder instance book id.
+Remove lms chapter id & group id.
+Add due dates to chapters and sections.
+	Chapter should set for sections.
+	Chapter should not be in config file.
+Add checkbox / ready / group for Show Section and True/False.
+Add a gear icon for Delete Chapter and Set Due Date.
+Style the expanded view. Borders? Canvas Method?
+Fix "Hide Options" and "Save Book" buttons.
+Add Bootstrap Datepicker.
+Fix Style Colors.
+Send JSON Object to Save Book button.
+Fix header text.
