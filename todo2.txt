@@ -1,9 +1,7 @@
 Reorder instance book id.
 Remove lms chapter id & group id.
-Add due dates to chapters and sections.
-	Chapter should set for sections.
-Add checkbox / ready / group for Show Section and True/False.
-Add a gear icon for Delete Chapter and Set Due Date.
-Add Bootstrap Datepicker.
+Add a gear icon for Delete Chapter and Set Due Date. *
+Add Bootstrap Datepicker. *
 Send JSON Object to Save Book button.
-Fix header text.
+
+https://eonasdan.github.io/bootstrap-datetimepicker/Installing/
