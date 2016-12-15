@@ -1,7 +1,6 @@
 Reorder instance book id.
 Remove lms chapter id & group id.
-Add a gear icon for Delete Chapter and Set Due Date. *
-Add Bootstrap Datepicker. *
-Send JSON Object to Save Book button.
+Compile moustache html.
+Integrate moustache.
 
-https://eonasdan.github.io/bootstrap-datetimepicker/Installing/
+Does order matter?
