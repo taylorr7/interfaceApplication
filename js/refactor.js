@@ -23,6 +23,10 @@ $(document).on('blur', ':input', function() {
 	$(this).attr('value', $(this).val());
 });
 
+
+/*
+ * Sets the data-key attribute of a select tag when the user changes it.
+ */
 $(document).on('blur', 'select', function() {
 	$(this).attr('data-key', $(this).val());
 });
