@@ -204,7 +204,7 @@ $(document).ready(() => {
 			}
 		});
 		
-		var source = "<h1> Chapters: </h1> <ul class=\"collapse sortable\"> {{#each chapters}}" + // List
+		var source = "<h1> Chapters: </h1> {{#if last_compiled}} <ul class=\"collapse\"> {{else}} <ul class=\"collapse sortable\"> {{/if}} {{#each chapters}}" + // List
 				   "<li><a data-key=\"{{@key}}\"> <strong> Chapter: </strong> {{@key}} </a>" + // Chapters
 				   //"<button type=\"button\" data-toggle=\"modal\" data-target=\"#chapterDue\" data-chapter=\"{{@key}}\" class=\"chapterLoad\">Set Due Dates</button>" + // Chapter Due Date Button
 				   "<ul class=\"sortable\"> {{#each .}}" + // Chapters
