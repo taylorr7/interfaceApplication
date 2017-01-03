@@ -1,4 +1,4 @@
-var jsonFile = "https://taylorr7.github.io/interfaceApplication/json/CS3.json";
+var jsonFile = "https://taylorr7.github.io/interfaceApplication/json/CS4.json";
 let textFile = null; // Temporary global variable used for download link.
 
 /*
@@ -205,10 +205,10 @@ $(document).ready(() => {
 		});
 		
 		var source = "<h1> Chapters: </h1> {{#if last_compiled}} <ul class=\"collapse\"> {{else}} <ul class=\"collapse sortable\"> {{/if}} {{#each chapters}}" + // List
-				   "<li><a data-key=\"{{@key}}\"> <strong> Chapter: </strong> {{@key}} </a>" + // Chapters
+				   "<li><a data-key=\"{{@key}}\"> {{#unless ../last_compiled}} ICON {{/unless}} <strong> Chapter: </strong> {{@key}} </a>" + // Chapters
 				   //"<button type=\"button\" data-toggle=\"modal\" data-target=\"#chapterDue\" data-chapter=\"{{@key}}\" class=\"chapterLoad\">Set Due Dates</button>" + // Chapter Due Date Button
-				   "<ul class=\"sortable\"> {{#each .}}" + // Chapters
-				   "<li><a data-key=\"{{@key}}\"> <strong> Module: </strong> {{long_name}} </a><ul> {{#each sections}}" + // Modules
+				   "{{#if ../last_compiled}} <ul> {{else}} <ul class=\"sortable\"> {{/if}} {{#each .}}" + // Chapters
+				   "<li><a data-key=\"{{@key}}\"> {{#unless ../../last_compiled}} ICON {{/unless}} <strong> Module: </strong> {{long_name}} </a><ul> {{#each sections}}" + // Modules
 				   "<li><a data-key=\"{{@key}}\"> <strong> Section: </strong> {{@key}} </a> <ul> {{#each .}}" + // Sections
 				   "{{#if long_name}} <li><a data-key=\"{{@key}}\"> <strong> Exercise: </strong> {{long_name}} </a> <ul> {{#each .}}" + // Exercises
 				   "<li><a data-key=\"{{@key}}\"> {{keyCheck @key}}: </a> {{valCheck @key this}} </li>" + // Exercise Data
